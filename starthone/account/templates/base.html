@@ -1,0 +1,52 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Let's find Mr. Kim{% endblock %}</title>
+    <link href="{% static "css/base.css" %}" rel="stylesheet">
+</head>
+<body>
+    <div id="header">
+        <span class="logo"><a href="{% url "dashboard" %}">POCKET Teaching Assistant</a></span>
+        <link href="{% static "css/base.css" %}" rel="stylesheet">
+        {% if request.user.is_authenticated %}
+        <ul class="menu">
+          <!--
+            about은 회사 소개,
+            portfolio는 사용자들 포트폴리오 모음
+            home : crowdsourcing으로 사용자의 디자인 image 업로드하는 것
+            contact : 뭄무 컴퍼니 연락 정보
+          -->
+            <li {% if section == "crowdsourcing" %}class="selected"{% endif %}><a href="{% url "crowdsourcing" %}">Upload the Sound source</a></li>
+            <li {% if section == "mypage" %}class="selected"{% endif %}>                     </li>
+            <li {% if section == "mypage" %}class="selected"{% endif %}><a href="{% url "home" %}">My Page</a></li>
+
+        </ul>
+        {% endif %}
+
+        <span class="user">
+        {% if request.user.is_authenticated %}
+            Hello {{ request.user.first_name }}, <a href="{% url "logout" %}">Logout</a>
+        {% else %}
+            <a href="{% url "login" %}">Log-in</a>
+        {% endif %}
+        </span>
+    </div>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">
+                    {{ message|safe }}
+                    <a href="#" class="close">×</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>음원 파일을 업로드하세요.</h1>
+  {% load static %}
+  <img src="{% static "images/uploadimg.png" %}" alt="My image" height="150" width="150"/>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="redirect">Upload</button>
+  </form>
+{% endblock %}

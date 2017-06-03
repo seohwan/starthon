@@ -1,0 +1,53 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Mummu Company{% endblock %}</title>
+    <link href="{% static "css/base.css" %}" rel="stylesheet">
+</head>
+<body>
+    <div id="header">
+        <span class="logo"><a href="{% url "dashboard" %}">Mummu</a></span>
+        {% if request.user.is_authenticated %}
+        <ul class="menu">
+          <!--
+            about은 회사 소개,
+            portfolio는 사용자들 포트폴리오 모음
+            home : crowdsourcing으로 사용자의 디자인 image 업로드하는 것
+            contact : 뭄무 컴퍼니 연락 정보
+          -->
+
+            <li {% if section == "about" %}class="selected"{% endif %}><a href="{% url "about" %}">About</a></li>
+            <li {% if section == "portfolio" %}class="selected"{% endif %}><a href="{% url "dashboard" %}">Portfolio</a></li>
+            <li {% if section == "crowdsourcing" %}class="selected"{% endif %}><a href="{% url "crowdsourcing" %}">CrowdSourcing</a></li>
+            <li {% if section == "images" %}class="selected"{% endif %}><a href="{% url "contact" %}">Contact</a></li>
+            <li {% if section == "mypage" %}class="selected"{% endif %}><a href="{% url "home" %}">My Page</a></li>
+        </ul>
+        {% endif %}
+
+        <span class="user">
+        {% if request.user.is_authenticated %}
+            Hello {{ request.user.first_name }}, <a href="{% url "logout" %}">Logout</a>
+        {% else %}
+            <a href="{% url "login" %}">Log-in</a>
+        {% endif %}
+        </span>
+    </div>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">
+                    {{ message|safe }}
+                    <a href="#" class="close">×</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <p>{{ request.user.first_name }}'s files:</p>
+  <ol>
+    {% for obj in documents %}
+      <li>
+        <a href="{{ obj.document.url }}">{{ obj.document.name }}</a>
+        <small>(Uploaded at: {{ obj.uploaded_at }})</small>
+        <a href="{% url 'delete_document' obj.id %}">delete</a>
+      </li>
+    {% endfor %}
+  </ol>
+
+{% endblock %}
