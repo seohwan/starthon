@@ -2,12 +2,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{% block title %}Let's find Mr. Kim{% endblock %}</title>
+    <title>{% block title %}ULec{% endblock %}</title>
     <link href="{% static "css/base.css" %}" rel="stylesheet">
 </head>
 <body>
     <div id="header">
-        <span class="logo"><a href="{% url "dashboard" %}">POCKET Teaching Assistant</a></span>
+        <span class="logo"><a href="{% url "dashboard" %}">ULec</a></span>
         <link href="{% static "css/base.css" %}" rel="stylesheet">
         {% if request.user.is_authenticated %}
         <ul class="menu">
